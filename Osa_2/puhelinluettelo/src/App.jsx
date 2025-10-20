@@ -8,6 +8,14 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
+    const nameExists = persons.some(person => person.name === newName)
+
+    if (nameExists) {
+      alert(`${newName} is already added to phonebook`)
+      return
+    }
+
     const newPerson = { name: newName }
     setPersons(persons.concat(newPerson))
     setNewName('')
@@ -28,11 +36,11 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <ul>
+      <div>
         {persons.map(person => (
           <li key={person.name}>{person.name}</li>
         ))}
-      </ul>
+      </div>
     </div>
   )
 
