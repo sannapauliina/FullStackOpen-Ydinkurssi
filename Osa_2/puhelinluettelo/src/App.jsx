@@ -54,23 +54,40 @@ const App = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    const nameExists = persons.some(person => person.name === newName)
+    const existingPerson = persons.find(p => p.name === newName)
 
-    if (nameExists) {
-      alert(`${newName} is already added to phonebook`)
-      return
-    }
+    if (existingPerson) {
+      const confirmUpdate = window.confirm(
+        `${newName} is already added to phonebook, replace the old number with a new one?`
+      )
+      if (!confirmUpdate) return
 
-    const newPerson = { name: newName, number: newNumber }
-    
-    personService
-      .create(newPerson)
-      .then(returnedPerson => {
-        setPersons(persons.concat(returnedPerson))
-        setNewName('')
-        setNewNumber('')
-      })
+      const updatedPerson = { ...existingPerson, number: newNumber }
+
+      personService
+        .update(existingPerson.id, updatedPerson)
+        .then(returnedPerson => {
+          setPersons(persons.map(p => p.id !== returnedPerson.id ? p : returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+        .catch(error => {
+          console.error('PUT failed:', error)
+          alert(`Information of ${newName} has already been removed from server`)
+          setPersons(persons.filter(p => p.id !== existingPerson.id))
+        })
+    } else {
+      const newPerson = { name: newName, number: newNumber }
+
+      personService
+        .create(newPerson)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
     }
+  }
 
   const handleDelete = (id, name) => {
     const confirm = window.confirm(`Delete ${name}?`)
