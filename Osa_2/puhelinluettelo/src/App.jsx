@@ -3,11 +3,11 @@ import axios from 'axios'
 import personService from './services/persons'
 
 
-const Notification = ({ message }) => {
+const Notification = ({ message, type }) => {
   if (message === null) return null
 
   return (
-    <div className="notification">
+    <div className={type === 'error' ? 'error' : 'notification'}>
       {message}
     </div>
   )
@@ -61,7 +61,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
   const [notification, setNotification] = useState(null)
-
+  const [notificationType, setNotificationType] = useState('success')
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -82,12 +82,15 @@ const App = () => {
           setPersons(persons.map(p => p.id !== returnedPerson.id ? p : returnedPerson))
           setNewName('')
           setNewNumber('')
+          setNotificationType('success')
           setNotification(`Updated number for ${returnedPerson.name}`)
           setTimeout(() => setNotification(null), 5000)
         })
         .catch(error => {
           console.error('PUT failed:', error)
-          alert(`Information of ${newName} has already been removed from server`)
+          setNotificationType('error')
+          setNotification(`Information of ${newName} has already been removed from server`)
+          setTimeout(() => setNotification(null), 5000)
           setPersons(persons.filter(p => p.id !== existingPerson.id))
         })
     } else {
@@ -99,6 +102,7 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setNotificationType('success')
           setNotification(`Added ${returnedPerson.name}`)
           setTimeout(() => setNotification(null), 5000)
         })
@@ -113,11 +117,14 @@ const App = () => {
       .remove(id)
       .then(() => {
         setPersons(persons.filter(person => person.id !== id))
+        setNotificationType('success')
         setNotification(`Deleted ${name}`)
         setTimeout(() => setNotification(null), 5000)
       })
       .catch(error => {
-        alert(`${name} is already removed from phonebook`)
+        setNotificationType('error')
+        setNotification(`${name} has already been removed from the server`)
+        setTimeout(() => setNotification(null), 5000)
         setPersons(persons.filter(person => person.id !== id))
       })
     }
@@ -136,7 +143,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={notification} />
+      <Notification message={notification} type={notificationType} />
       <h2>Phonebook</h2>
       <Filter
         filter={filter}
