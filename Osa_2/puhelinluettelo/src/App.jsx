@@ -3,6 +3,16 @@ import axios from 'axios'
 import personService from './services/persons'
 
 
+const Notification = ({ message }) => {
+  if (message === null) return null
+
+  return (
+    <div className="notification">
+      {message}
+    </div>
+  )
+}
+
 const Filter = ({ filter, handleFilterChange }) => (
   <div>
     filter shown with: <input
@@ -50,6 +60,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [notification, setNotification] = useState(null)
+
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -70,6 +82,8 @@ const App = () => {
           setPersons(persons.map(p => p.id !== returnedPerson.id ? p : returnedPerson))
           setNewName('')
           setNewNumber('')
+          setNotification(`Updated number for ${returnedPerson.name}`)
+          setTimeout(() => setNotification(null), 5000)
         })
         .catch(error => {
           console.error('PUT failed:', error)
@@ -85,6 +99,8 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setNotification(`Added ${returnedPerson.name}`)
+          setTimeout(() => setNotification(null), 5000)
         })
     }
   }
@@ -97,6 +113,8 @@ const App = () => {
       .remove(id)
       .then(() => {
         setPersons(persons.filter(person => person.id !== id))
+        setNotification(`Deleted ${name}`)
+        setTimeout(() => setNotification(null), 5000)
       })
       .catch(error => {
         alert(`${name} is already removed from phonebook`)
@@ -118,6 +136,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={notification} />
       <h2>Phonebook</h2>
       <Filter
         filter={filter}
