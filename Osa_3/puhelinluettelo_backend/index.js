@@ -16,77 +16,67 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 
 app.use(express.static('dist')) 
 
+// GET
 app.get('/api/persons', (req, res) => {
   Person.find({}).then(persons => {
+    console.log('Fetched persons:', persons.length)
     res.json(persons)
   })
 })
 
-app.get('/api/persons/:id', (req, res) => {
-  const id = req.params.id
-  const person = persons.find(p => p.id === id)
-})
+// POST
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+  console.log('POST request received:', body)
 
-app.delete('/api/persons/:id', (req, res) => {
-  const id = req.params.id
-  const person = persons.find(p => p.id === id)
-
-  if (person) {
-    persons = persons.filter(p => p.id !== id)
-    res.status(204).end() // 204 no content
-  } else {
-    res.status(404).end() // 404 not found
-  }
-})
-
-app.post('/api/persons', (req, res) => {
-  const body = req.body
-
-  if (!body.name || !body.number) {
-    return res.status(400).json({ error: 'name or number missing' })
-  }
-
-  const nameExists = persons.find(p => p.name === body.name)
-  if (nameExists) {
-    return res.status(400).json({ error: 'name must be unique' })
-  }
-
-  const person = {
-    id: Math.floor(Math.random() * 1000000).toString(),
+  const person = new Person({
     name: body.name,
-    number: body.number
-  }
+    number: body.number,
+  })
 
-  persons = persons.concat(person)
-  res.json(person)
+  person.save().then(savedPerson => {
+    console.log('Saved to DB:', savedPerson)
+    response.json(savedPerson)
+  })
 })
 
+// GET yksittäinen id
+app.get('/api/persons/:id', (req, res) => {
+  res.status(501).send({ error: 'Not implemented yet' })
+})
+
+// DELETE yksittäinen id
+app.delete('/api/persons/:id', (req, res) => {
+  res.status(501).send({ error: 'Not implemented yet' })
+})
+
+// INFO
 app.get('/info', (req, res) => {
-  const count = persons.length
-  const date = new Date()
+  res.status(501).send({ error: 'Not implemented yet' })
 
-  // GMT offset ( +0200 )
-  const offset = -date.getTimezoneOffset()
-  const sign = offset >= 0 ? '+' : '-'
-  const hours = String(Math.floor(Math.abs(offset) / 60)).padStart(2, '0')
-  const minutes = String(Math.abs(offset) % 60).padStart(2, '0')
-  const gmt = `GMT${sign}${hours}${minutes}`
-
-  // Aikavyöhyke
-  const tzName = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Europe/Helsinki',
-    timeZoneName: 'long'
-  }).format(date).split(', ')[1]
-
-  const finalString = `${date.toDateString()} ${date.toTimeString().split(' ')[0]} ${gmt} (${tzName})`
-
-  res.send(`
-    <p>Phonebook has info for ${count} people</p>
-    <p>${finalString}</p>
-  `)
+  // Vanha toteutus:
+  // const date = new Date()
+  // const offset = -date.getTimezoneOffset()
+  // const sign = offset >= 0 ? '+' : '-'
+  // const hours = String(Math.floor(Math.abs(offset) / 60)).padStart(2, '0')
+  // const minutes = String(Math.abs(offset) % 60).padStart(2, '0')
+  // const gmt = `GMT${sign}${hours}${minutes}`
+  //
+  // const tzName = new Intl.DateTimeFormat('en-US', {
+  //   timeZone: 'Europe/Helsinki',
+  //   timeZoneName: 'long'
+  // }).format(date).split(', ')[1]
+  //
+  // const finalString = `${date.toDateString()} ${date.toTimeString().split(' ')[0]} ${gmt} (${tzName})`
+  //
+  // res.send(`
+  //   <p>Phonebook has info for ${count} people</p>
+  //   <p>${finalString}</p>
+  // `)
 })
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
