@@ -47,7 +47,13 @@ app.get('/api/persons/:id', (req, res) => {
 
 // DELETE yksittäinen id
 app.delete('/api/persons/:id', (req, res) => {
-  res.status(501).send({ error: 'Not implemented yet' })
+  const id = req.params.id
+  console.log('DELETE request received, id:', id)
+
+  Person.findByIdAndDelete(id).then(() => {
+    console.log('Deleted person with id:', id)
+    res.status(204).end()
+  })
 })
 
 // INFO
