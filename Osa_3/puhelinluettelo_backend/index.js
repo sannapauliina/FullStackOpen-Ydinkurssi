@@ -17,43 +17,50 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 app.use(express.static('dist')) 
 
 // GET
-app.get('/api/persons', (req, res) => {
-  Person.find({}).then(persons => {
-    console.log('Fetched persons:', persons.length)
-    res.json(persons)
-  })
+app.get('/api/persons', (req, res, next) => {
+  Person.find({})
+    .then(persons => {
+      console.log('Fetched persons:', persons.length)
+      res.json(persons)
+    })
+    .catch(error => next(error))
 })
 
 // POST
-app.post('/api/persons', (request, response) => {
-  const body = request.body
-  console.log('POST request received:', body)
-
+app.post('/api/persons', (req, res, next) => {
+  const body = req.body
   const person = new Person({
     name: body.name,
     number: body.number,
   })
 
-  person.save().then(savedPerson => {
-    console.log('Saved to DB:', savedPerson)
-    response.json(savedPerson)
-  })
+  person.save()
+    .then(savedPerson => {
+      res.json(savedPerson)
+    })
+    .catch(error => next(error))
 })
 
 // GET yksittäinen id
-app.get('/api/persons/:id', (req, res) => {
-  res.status(501).send({ error: 'Not implemented yet' })
+app.get('/api/persons/:id', (req, res, next) => {
+  Person.findById(req.params.id)
+    .then(person => {
+      if (person) {
+        res.json(person)
+      } else {
+        res.status(404).end()
+      }
+    })
+    .catch(error => next(error))
 })
 
 // DELETE yksittäinen id
-app.delete('/api/persons/:id', (req, res) => {
-  const id = req.params.id
-  console.log('DELETE request received, id:', id)
-
-  Person.findByIdAndDelete(id).then(() => {
-    console.log('Deleted person with id:', id)
-    res.status(204).end()
-  })
+app.delete('/api/persons/:id', (req, res, next) => {
+  Person.findByIdAndDelete(req.params.id)
+    .then(() => {
+      res.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 // INFO
@@ -80,6 +87,20 @@ app.get('/info', (req, res) => {
   //   <p>${finalString}</p>
   // `)
 })
+
+const errorHandler = (error, req, res, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return res.status(400).send({ error: 'malformatted id' })
+  } else if (error.name === 'ValidationError') {
+    return res.status(400).json({ error: error.message })
+  }
+
+  next(error)
+}
+
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
