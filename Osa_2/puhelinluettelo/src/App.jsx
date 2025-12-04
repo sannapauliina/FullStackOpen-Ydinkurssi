@@ -129,10 +129,11 @@ const App = () => {
       })
     }
 
-  const filteredPersons = persons.filter(person =>
-    person.name.toLowerCase().includes(filter.toLowerCase())
+  const normalizedFilter = filter ? filter.toLowerCase() : ''
+  const filteredPersons = persons.filter(
+    p => p.name && p.name.toLowerCase().includes(normalizedFilter)
   )
-
+  
   useEffect(() => {
     personService
       .getAll()
