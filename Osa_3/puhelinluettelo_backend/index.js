@@ -85,28 +85,31 @@ app.put('/api/persons/:id', (req, res, next) => {
 })
 
 // INFO
-app.get('/info', (req, res) => {
-  res.status(501).send({ error: 'Not implemented yet' })
+app.get('/info', (req, res, next) => {
+  Person.countDocuments({})
+    .then(count => {
+      const date = new Date()
 
-  // Vanha toteutus:
-  // const date = new Date()
-  // const offset = -date.getTimezoneOffset()
-  // const sign = offset >= 0 ? '+' : '-'
-  // const hours = String(Math.floor(Math.abs(offset) / 60)).padStart(2, '0')
-  // const minutes = String(Math.abs(offset) % 60).padStart(2, '0')
-  // const gmt = `GMT${sign}${hours}${minutes}`
-  //
-  // const tzName = new Intl.DateTimeFormat('en-US', {
-  //   timeZone: 'Europe/Helsinki',
-  //   timeZoneName: 'long'
-  // }).format(date).split(', ')[1]
-  //
-  // const finalString = `${date.toDateString()} ${date.toTimeString().split(' ')[0]} ${gmt} (${tzName})`
-  //
-  // res.send(`
-  //   <p>Phonebook has info for ${count} people</p>
-  //   <p>${finalString}</p>
-  // `)
+      // GMT offset
+      const offset = -date.getTimezoneOffset()
+      const sign = offset >= 0 ? '+' : '-'
+      const hours = String(Math.floor(Math.abs(offset) / 60)).padStart(2, '0')
+      const minutes = String(Math.abs(offset) % 60).padStart(2, '0')
+      const gmt = `GMT${sign}${hours}${minutes}`
+
+      const tzName = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Europe/Helsinki',
+        timeZoneName: 'long'
+      }).format(date).split(', ')[1]
+
+      const finalString = `${date.toDateString()} ${date.toTimeString().split(' ')[0]} ${gmt} (${tzName})`
+
+      res.send(`
+        <p>Phonebook has info for ${count} people</p>
+        <p>${finalString}</p>
+      `)
+    })
+    .catch(error => next(error))
 })
 
 const errorHandler = (error, req, res, next) => {

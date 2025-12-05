@@ -1,1 +1,5 @@
+### Local backend
+GET http://localhost:3001/api/persons
+
+### Render backend
 GET https://fullstackopen-ydinkurssi-puhelinluettelo.onrender.com/api/persons

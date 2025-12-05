@@ -1,0 +1,17 @@
+### Local backend
+PUT http://localhost:3001/api/persons/6926dd2b02191028c5641868
+Content-Type: application/json
+
+{
+  "name": "Arto Artonen",
+  "number": "050-9999999"
+}
+
+### Render backend
+PUT https://fullstackopen-ydinkurssi-puhelinluettelo.onrender.com/api/persons/6926dd2b02191028c5641868
+Content-Type: application/json
+
+{
+  "name": "Arto Artonen",
+  "number": "050-9999999"
+}

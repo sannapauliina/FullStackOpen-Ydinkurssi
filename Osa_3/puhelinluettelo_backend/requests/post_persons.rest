@@ -1,3 +1,13 @@
+### Local backend
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Testi Testinen",
+  "number": "050-1234567"
+}
+
+### Render backend
 POST https://fullstackopen-ydinkurssi-puhelinluettelo.onrender.com/api/persons
 Content-Type: application/json
 
