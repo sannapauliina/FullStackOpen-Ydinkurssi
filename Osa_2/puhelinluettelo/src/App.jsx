@@ -106,10 +106,17 @@ const App = () => {
           setNotification(`Added ${returnedPerson.name}`)
           setTimeout(() => setNotification(null), 5000)
         })
-    }
-  }
+        .catch(error => {
+          console.error('POST failed:', error.response.data)
 
-  const handleDelete = (id, name) => {
+          setNotificationType('error')
+          setNotification(error.response.data.error)
+          setTimeout(() => setNotification(null), 5000)
+        })
+      }
+  }
+  
+    const handleDelete = (id, name) => {
     const confirm = window.confirm(`Delete ${name}?`)
     if (!confirm) return
 
