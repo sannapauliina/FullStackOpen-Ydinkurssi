@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const morgan = require('morgan')
+const path = require('path')
 const app = express()
 
 const Person = require('./models/person')
@@ -123,6 +124,10 @@ const errorHandler = (error, req, res, next) => {
 
   next(error)
 }
+
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+})
 
 app.use(errorHandler)
 
