@@ -2,6 +2,28 @@ const { test, describe } = require('node:test')
 const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
 
+describe('most likes', () => {
+  const blogs = [
+    { title: 'Blog1', author: 'Author1', url: 'url1', likes: 7 },
+    { title: 'Blog2', author: 'Author2', url: 'url2', likes: 3 },
+    { title: 'Blog3', author: 'Author1', url: 'url3', likes: 12 },
+    { title: 'Blog4', author: 'Author1', url: 'url4', likes: 1 },
+    { title: 'Blog5', author: 'Author2', url: 'url5', likes: 4 }
+  ]
+
+  test('of empty list is null', () => {
+    const result = listHelper.mostLikes([])
+    assert.strictEqual(result, null)
+  })
+
+  test('author with most likes is returned', () => {
+    const result = listHelper.mostLikes(blogs)
+    console.log('Most likes author:', result.author, 'with', result.likes, 'likes')
+    const expected = { author: 'Author1', likes: 20 }
+    assert.deepStrictEqual(result, expected)
+  })
+})
+
 describe('most blogs', () => {
   const blogs = [
     { title: 'Blog1', author: 'Author1', url: 'url1', likes: 7 },
