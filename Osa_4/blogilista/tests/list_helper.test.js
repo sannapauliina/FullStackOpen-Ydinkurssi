@@ -2,6 +2,26 @@ const { test, describe } = require('node:test')
 const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
 
+describe('favorite blog', () => {
+  const listWithManyBlogs = [
+    { title: 'Blog1', author: 'Author1', url: 'url1', likes: 7 },
+    { title: 'Blog2', author: 'Author2', url: 'url2', likes: 3 },
+    { title: 'Blog3', author: 'Author3', url: 'url3', likes: 12 }
+  ]
+
+  test('of empty list is null', () => {
+    const result = listHelper.favoriteBlog([])
+    assert.strictEqual(result, null)
+  })
+
+  test('of a bigger list is the one with most likes', () => {
+    const result = listHelper.favoriteBlog(listWithManyBlogs)
+    console.log('Favorite blog title:', result.title)
+    const expected = { title: 'Blog3', author: 'Author3', url: 'url3', likes: 12 }
+    assert.deepStrictEqual(result, expected)
+  })
+})
+
 describe('total likes', () => {
   const listWithOneBlog = [
     {
