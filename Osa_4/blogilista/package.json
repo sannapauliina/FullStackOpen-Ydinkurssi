@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "test": "node --test"
+    "test": "cross-env NODE_ENV=test node --test"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,8 @@
     "mongoose": "^9.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
+    "cross-env": "^10.1.0",
+    "nodemon": "^3.1.11",
+    "supertest": "^7.1.4"
   }
 }

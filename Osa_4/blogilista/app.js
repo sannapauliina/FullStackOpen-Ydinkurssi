@@ -8,9 +8,14 @@ const middleware = require('./utils/middleware')
 const app = express()
 
 mongoose.set('strictQuery', false)
-logger.info('connecting to', config.MONGODB_URI)
 
-mongoose.connect(config.MONGODB_URI)
+const mongoUrl = process.env.NODE_ENV === 'test'
+  ? config.TEST_MONGODB_URI
+  : config.MONGODB_URI
+
+logger.info('connecting to', mongoUrl)
+
+mongoose.connect(mongoUrl)
   .then(() => logger.info('connected to MongoDB'))
   .catch((err) => logger.error('error connecting to MongoDB:', err.message))
 
