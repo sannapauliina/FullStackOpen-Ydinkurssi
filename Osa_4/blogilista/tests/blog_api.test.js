@@ -54,6 +54,37 @@ describe('GET /api/blogs', () => {
   })
 })
 
+describe('POST /api/blogs', () => {
+  test('a valid blog can be added', async () => {
+    const newBlog = {
+      title: 'New blog',
+      author: 'Author3',
+      url: 'http://example.com/new',
+      likes: 10
+    }
+
+    // Blogit ennen POSTia
+    const blogsAtStart = await api.get('/api/blogs')
+
+    // Uusi blogi
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    // Blogit POSTin jälkeen
+    const blogsAtEnd = await api.get('/api/blogs')
+
+    // Määrän kasvun varmistus
+    assert.strictEqual(blogsAtEnd.body.length, blogsAtStart.body.length + 1)
+
+    // Uuden blogin löytymisen varmistus
+    const titles = blogsAtEnd.body.map(b => b.title)
+    assert.ok(titles.includes('New blog'))
+  })
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
