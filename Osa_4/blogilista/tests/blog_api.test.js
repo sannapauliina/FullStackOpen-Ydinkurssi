@@ -104,6 +104,40 @@ describe('POST /api/blogs', () => {
   })
 })
 
+describe('POST /api/blogs', () => {
+  test('blog without title is not added', async () => {
+    const newBlog = {
+      author: 'Author5',
+      url: 'http://example.com/notitle',
+      likes: 5
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+    const blogsAtEnd = await api.get('/api/blogs')
+    assert.strictEqual(blogsAtEnd.body.length, initialBlogs.length)
+  })
+
+  test('blog without url is not added', async () => {
+    const newBlog = {
+      title: 'Blog without url',
+      author: 'Author6',
+      likes: 3
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+    const blogsAtEnd = await api.get('/api/blogs')
+    assert.strictEqual(blogsAtEnd.body.length, initialBlogs.length)
+  })
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
