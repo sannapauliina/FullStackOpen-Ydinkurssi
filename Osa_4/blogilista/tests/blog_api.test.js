@@ -42,6 +42,18 @@ describe('GET /api/blogs', () => {
   })
 })
 
+describe('GET /api/blogs', () => {
+  test('blogs have field id instead of _id', async () => {
+    const response = await api.get('/api/blogs')
+
+    const blogs = response.body
+    blogs.forEach(blog => {
+      assert.ok(blog.id, 'Blog should have id field')
+      assert.strictEqual(blog._id, undefined, 'Blog should not have _id field')
+    })
+  })
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
