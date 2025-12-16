@@ -85,6 +85,25 @@ describe('POST /api/blogs', () => {
   })
 })
 
+describe('POST /api/blogs', () => {
+  test('if likes property is missing, it defaults to 0', async () => {
+    const newBlog = {
+      title: 'Blog without likes',
+      author: 'Author4',
+      url: 'http://example.com/nolikes'
+    }
+
+    const response = await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    // Varmistus että tykkäysten määrä on 0
+    assert.strictEqual(response.body.likes, 0)
+  })
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
