@@ -157,6 +157,22 @@ describe('DELETE /api/blogs/:id', () => {
   })
 })
 
+describe('DELETE /api/blogs/:id', () => {
+  test('returns 404 if blog does not exist', async () => {
+    const nonExistingId = new mongoose.Types.ObjectId() // luodaan validi mutta olematon id
+
+    await api
+      .delete(`/api/blogs/${nonExistingId}`)
+      .expect(404)
+  })
+
+  test('returns 400 if id is invalid', async () => {
+    await api
+      .delete('/api/blogs/12345') // ei validi ObjectId
+      .expect(400)
+  })
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
