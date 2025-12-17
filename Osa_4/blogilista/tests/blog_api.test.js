@@ -173,6 +173,42 @@ describe('DELETE /api/blogs/:id', () => {
   })
 })
 
+describe('PUT /api/blogs/:id', () => {
+  test('a blog\'s likes can be updated', async () => {
+    
+    const blogsAtStart = await api.get('/api/blogs')
+    const blogToUpdate = blogsAtStart.body[0]
+
+    const updatedData = { likes: blogToUpdate.likes + 1 }
+
+    const response = await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(updatedData)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    assert.strictEqual(response.body.likes, blogToUpdate.likes + 1)
+  })
+})
+
+describe('PUT /api/blogs/:id', () => {
+  test('returns 404 if blog does not exist', async () => {
+    const nonExistingId = new mongoose.Types.ObjectId()
+
+    await api
+      .put(`/api/blogs/${nonExistingId}`)
+      .send({ likes: 99 })
+      .expect(404)
+  })
+
+  test('returns 400 if id is invalid', async () => {
+    await api
+      .put('/api/blogs/12345')
+      .send({ likes: 99 })
+      .expect(400)
+  })
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
