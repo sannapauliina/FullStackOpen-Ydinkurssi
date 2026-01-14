@@ -2,23 +2,40 @@ const express = require('express')
 const Blog = require('../models/blog')
 const logger = require('../utils/logger')
 
+const User = require('../models/user')
 const blogsRouter = express.Router()
 
-blogsRouter.get('/', async (req, res, next) => {
-  try {
-    const blogs = await Blog.find({})
-    res.json(blogs)
-  } catch (error) {
-    next(error)
-  }
+blogsRouter.get('/', async (req, res) => {
+  const blogs = await Blog
+    .find({})
+    .populate('user', { username: 1, name: 1 })
+
+  res.json(blogs)
 })
 
 blogsRouter.post('/', async (req, res, next) => {
   try {
-    const blog = new Blog(req.body)
-    const saved = await blog.save()
-    logger.info('New blog saved:', saved.title, 'by', saved.author)
-    res.status(201).json(saved)
+    const body = req.body
+
+    // hae joku käyttäjä
+    const users = await User.find({})
+    const user = users[0]
+
+    const blog = new Blog({
+      title: body.title,
+      author: body.author,
+      url: body.url,
+      likes: body.likes || 0,
+      user: user._id
+    })
+
+    const savedBlog = await blog.save()
+
+    // lisää blogi käyttäjän blogs-listaan
+    user.blogs = user.blogs.concat(savedBlog._id)
+    await user.save()
+
+    res.status(201).json(savedBlog)
   } catch (error) {
     next(error)
   }
