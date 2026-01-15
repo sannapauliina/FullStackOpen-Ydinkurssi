@@ -31,7 +31,7 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res, next) => {
 
     const savedBlog = await blog.save()
 
-    // lisää blogi käyttäjän blogs-listaan
+    // lisää blogi käyttäjän listaan
     user.blogs = user.blogs.concat(savedBlog._id)
     await user.save()
 
