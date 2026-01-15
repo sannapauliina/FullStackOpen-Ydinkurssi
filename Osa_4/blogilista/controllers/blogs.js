@@ -4,6 +4,7 @@ const logger = require('../utils/logger')
 
 const User = require('../models/user')
 const blogsRouter = express.Router()
+const middleware = require('../utils/middleware')
 
 blogsRouter.get('/', async (req, res) => {
   const blogs = await Blog
@@ -13,13 +14,12 @@ blogsRouter.get('/', async (req, res) => {
   res.json(blogs)
 })
 
-blogsRouter.post('/', async (req, res, next) => {
+blogsRouter.post('/', middleware.userExtractor, async (req, res, next) => {
+  console.log('USER IN REQUEST:', req.user)
+
   try {
     const body = req.body
-
-    // hae joku käyttäjä
-    const users = await User.find({})
-    const user = users[0]
+    const user = req.user
 
     const blog = new Blog({
       title: body.title,

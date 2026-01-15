@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRva2VudXNlciIsImlkIjoiNjk2OTA5OGU3OTk3NzBjOWEwZDk1OWUxIiwiaWF0IjoxNzY4NDkzMTkwfQ.s7kRIv3azr86w4GfwZFqR8ZRYSdCYROMG1SbN7-qvxc
+
+{
+  "title": "Tokenilla lisätty blogi",
+  "author": "Kirjautunut Käyttäjä",
+  "url": "http://example.com",
+  "likes": 7
+}
