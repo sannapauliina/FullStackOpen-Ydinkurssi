@@ -8,7 +8,6 @@ const middleware = require('./utils/middleware')
 const app = express()
 
 const usersRouter = require('./controllers/users')
-
 const loginRouter = require('./controllers/login')
 
 mongoose.set('strictQuery', false)
@@ -35,3 +34,4 @@ app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
 module.exports = app
+
