@@ -41,19 +41,23 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res, next) => {
   }
 })
 
-blogsRouter.delete('/:id', async (req, res, next) => {
+blogsRouter.delete('/:id', middleware.userExtractor, async (req, res, next) => {
   try {
-    const deletedBlog = await Blog.findByIdAndDelete(req.params.id)
+    const blog = await Blog.findById(req.params.id)
 
-    if (!deletedBlog) {
-      const error = new Error('blog not found')
-      error.status = 404
-      return next(error)
+    if (!blog) {
+      return res.status(404).json({ error: 'blog not found' })
     }
 
-    res.status(204).end()
+    // Vain lisääjä saa poistaa
+    if (blog.user.toString() !== req.user.id.toString()) {
+      return res.status(403).json({ error: 'only the creator can delete a blog' })
+    }
+
+    await Blog.findByIdAndDelete(req.params.id)
+    return res.status(204).end()
+
   } catch (error) {
-    error.status = 400
     next(error)
   }
 })
