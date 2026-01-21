@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Notification from './components/Notification'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -12,6 +13,15 @@ const App = () => {
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
+
+  const [notification, setNotification] = useState({ message: null, type: null })
+
+  const showNotification = (message, type = 'success') => {
+    setNotification({ message, type })
+    setTimeout(() => {
+      setNotification({ message: null, type: null })
+    }, 5000)
+  }
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -45,8 +55,10 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+
+      showNotification(`Welcome back, ${user.name}!`)
     } catch (exception) {
-      console.log('wrong credentials')
+      showNotification('wrong username/password', 'error')
     }
   }
 
@@ -59,17 +71,25 @@ const App = () => {
       url: newUrl
     }
 
-    const returnedBlog = await blogService.create(blogObject)
-    setBlogs(blogs.concat(returnedBlog))
+    try {
+      const returnedBlog = await blogService.create(blogObject)
+      setBlogs(blogs.concat(returnedBlog))
 
-    setNewTitle('')
-    setNewAuthor('')
-    setNewUrl('')
+      showNotification(`a new blog "${returnedBlog.title}" by ${returnedBlog.author} added`)
+
+      setNewTitle('')
+      setNewAuthor('')
+      setNewUrl('')
+    } catch (error) {
+      showNotification('failed to add blog', 'error')
+    }
   }
 
   if (user === null) {
     return (
       <div>
+        <Notification message={notification.message} type={notification.type} />
+
         <h2>Log in to application</h2>
         <form onSubmit={handleLogin}>
           <div>
@@ -95,6 +115,8 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={notification.message} type={notification.type} />
+
       <p>
         {user.name} logged in
         <button onClick={() => {
