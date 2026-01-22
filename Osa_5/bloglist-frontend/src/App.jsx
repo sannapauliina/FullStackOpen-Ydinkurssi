@@ -56,7 +56,7 @@ const App = () => {
       setPassword('')
 
       showNotification(`Welcome back, ${user.name}!`)
-    } catch (exception) {
+    } catch {
       showNotification('wrong username/password', 'error')
     }
   }
@@ -69,7 +69,7 @@ const App = () => {
       showNotification(`a new blog "${returnedBlog.title}" by ${returnedBlog.author} added`)
 
       blogFormRef.current.toggleVisibility()
-    } catch (error) {
+    } catch {
       showNotification('failed to add blog', 'error')
     }
   }
@@ -92,7 +92,7 @@ const App = () => {
       }
 
       setBlogs(blogs.map(b => b.id !== blog.id ? b : blogWithUser))
-    } catch (error) {
+    } catch {
       showNotification('failed to update likes', 'error')
     }
   }
@@ -105,7 +105,7 @@ const App = () => {
       await blogService.remove(blog.id)
       setBlogs(blogs.filter(b => b.id !== blog.id))
       showNotification(`Deleted "${blog.title}"`)
-    } catch (error) {
+    } catch {
       showNotification('failed to delete blog', 'error')
     }
   }
