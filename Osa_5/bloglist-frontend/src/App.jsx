@@ -11,7 +11,6 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
   const [notification, setNotification] = useState({ message: null, type: null })
 
   const blogFormRef = useRef()
@@ -86,7 +85,13 @@ const App = () => {
 
     try {
       const returnedBlog = await blogService.update(blog.id, updatedBlog)
-      setBlogs(blogs.map(b => b.id !== blog.id ? b : returnedBlog))
+
+      const blogWithUser = {
+        ...returnedBlog,
+        user: blog.user
+      }
+
+      setBlogs(blogs.map(b => b.id !== blog.id ? b : blogWithUser))
     } catch (error) {
       showNotification('failed to update likes', 'error')
     }
