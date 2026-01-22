@@ -69,10 +69,26 @@ const App = () => {
 
       showNotification(`a new blog "${returnedBlog.title}" by ${returnedBlog.author} added`)
 
-      // Lomakkeen sulku onnistuneen lisäyksen jälkeen
       blogFormRef.current.toggleVisibility()
     } catch (error) {
       showNotification('failed to add blog', 'error')
+    }
+  }
+
+  const likeBlog = async (blog) => {
+    const updatedBlog = {
+      user: blog.user?.id || blog.user,
+      likes: blog.likes + 1,
+      author: blog.author,
+      title: blog.title,
+      url: blog.url
+    }
+
+    try {
+      const returnedBlog = await blogService.update(blog.id, updatedBlog)
+      setBlogs(blogs.map(b => b.id !== blog.id ? b : returnedBlog))
+    } catch (error) {
+      showNotification('failed to update likes', 'error')
     }
   }
 
@@ -124,7 +140,7 @@ const App = () => {
 
       <h2>blogs</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} />
       )}
     </div>
   )
