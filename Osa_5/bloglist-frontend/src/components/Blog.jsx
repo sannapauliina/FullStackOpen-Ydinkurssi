@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
-const Blog = ({ blog, likeBlog }) => {
-  console.log('USER FIELD:', blog.user)
-  
+const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
   const [visible, setVisible] = useState(false)
 
   const toggleVisibility = () => {
@@ -34,6 +32,10 @@ const Blog = ({ blog, likeBlog }) => {
             <button onClick={() => likeBlog(blog)}>like</button>
           </div>
           <div>{blog.user?.name}</div>
+
+          {blog.user?.username === user.username && (
+            <button onClick={() => deleteBlog(blog)}>delete</button>
+          )}
         </div>
       )}
     </div>
@@ -41,3 +43,4 @@ const Blog = ({ blog, likeBlog }) => {
 }
 
 export default Blog
+
