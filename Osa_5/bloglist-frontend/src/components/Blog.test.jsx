@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
+import { vi } from 'vitest'
 
 describe('Blog component', () => {
 
@@ -57,5 +58,45 @@ describe('Blog component', () => {
     expect(screen.getByText('http://example.com')).toBeInTheDocument()
     expect(screen.getByText(/likes 10/i)).toBeInTheDocument()
     expect(screen.getByText('Test User')).toBeInTheDocument()
+  })
+
+  test('calls like handler twice when like button is clicked twice', async () => {
+    const blog = {
+      title: 'Testing React components',
+      author: 'Test Author',
+      url: 'http://example.com',
+      likes: 10,
+      user: {
+        username: 'tester',
+        name: 'Test User'
+      }
+    }
+
+    const user = { username: 'tester' }
+
+    const mockHandler = vi.fn()
+
+    render(
+      <Blog
+        blog={blog}
+        user={user}
+        likeBlog={mockHandler}
+      />
+    )
+
+    const userSim = userEvent.setup()
+
+    // view-nappi esiin
+    await userSim.click(screen.getByText('view'))
+
+    // like-nappi
+    const likeButton = screen.getByText('like')
+
+    // klikataan kahdesti
+    await userSim.click(likeButton)
+    await userSim.click(likeButton)
+
+    // tarkistus
+    expect(mockHandler).toHaveBeenCalledTimes(2)
   })
 })
