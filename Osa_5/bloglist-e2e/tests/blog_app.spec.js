@@ -54,7 +54,38 @@ describe('Blog app', () => {
 
       await page.getByRole('button', { name: 'create' }).click()
 
-      await expect(page.getByText('Playwright testing Test Author')).toBeVisible()
+      const blog = page.locator('text=Playwright testing Test Author').first() 
+      await expect(blog).toBeVisible()
+    })
+  })
+
+  describe('When logged in', () => {
+    beforeEach(async ({ page }) => {
+      await page.getByRole('textbox').nth(0).fill('mluukkai')
+      await page.getByRole('textbox').nth(1).fill('salainen')
+      await page.getByRole('button', { name: 'login' }).click()
+
+      await page.getByRole('button', { name: 'create new blog' }).click()
+      await page.getByRole('textbox').nth(0).fill('Like test blog')
+      await page.getByRole('textbox').nth(1).fill('Author')
+      await page.getByRole('textbox').nth(2).fill('http://example.com')
+      await page.getByRole('button', { name: 'create' }).click()
+    })
+
+    test('a blog can be liked', async ({ page }) => {
+      // Etsi kaikki view-napit
+      const viewButtons = page.getByRole('button', { name: 'view' })
+
+      // Klikkaa ensimmäistä view-nappia (koska beforeEach loi vain yhden blogin)
+      await viewButtons.first().click()
+
+      // Nyt like-nappi on näkyvissä
+      const likeButton = page.getByRole('button', { name: 'like' })
+
+      await likeButton.click()
+
+      // Tarkista likes 1
+      await expect(page.getByText('likes 1')).toBeVisible()
     })
   })
 })
