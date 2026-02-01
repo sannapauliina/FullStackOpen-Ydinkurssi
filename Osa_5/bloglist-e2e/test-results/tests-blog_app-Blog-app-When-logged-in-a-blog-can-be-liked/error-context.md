@@ -1,0 +1,260 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - paragraph [ref=e4]:
+    - text: Matti Luukkainen logged in
+    - button "logout" [ref=e5]
+  - button "create new blog" [ref=e8]
+  - heading "blogs" [level=2] [ref=e9]
+  - generic [ref=e10]:
+    - generic [ref=e11]:
+      - text: UusiTesti Kirjautunut Käyttäjä
+      - button "hide" [ref=e12]
+    - generic [ref=e13]:
+      - generic [ref=e14]: http://example.com
+      - generic [ref=e15]:
+        - text: likes 34
+        - button "like" [active] [ref=e16]
+      - generic [ref=e17]: Token Käyttäjä
+  - generic [ref=e19]:
+    - text: Ensimmäinen blogi Ada Lovelace
+    - button "view" [ref=e20]
+  - generic [ref=e22]:
+    - text: Uusi blogi Testaaja
+    - button "view" [ref=e23]
+  - generic [ref=e25]:
+    - text: Kolmas blogi Aatu A.
+    - button "view" [ref=e26]
+  - generic [ref=e28]:
+    - text: Tokenilla lisätty blogi Kirjautunut Käyttäjä
+    - button "view" [ref=e29]
+  - generic [ref=e31]:
+    - text: Toinen blogi Grace Hopper
+    - button "view" [ref=e32]
+  - generic [ref=e34]:
+    - text: Grace Hopper
+    - button "view" [ref=e35]
+  - generic [ref=e37]:
+    - text: Testaillaan Kirjautunut Käyttäjä
+    - button "view" [ref=e38]
+  - generic [ref=e40]:
+    - text: Tässä testataan Kirjautunut Käyttäjä
+    - button "view" [ref=e41]
+  - generic [ref=e43]:
+    - text: FrontendTwo Kirjautunut Käyttäjä
+    - button "view" [ref=e44]
+  - generic [ref=e46]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e47]
+  - generic [ref=e49]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e50]
+  - generic [ref=e52]:
+    - text: Like test blog Author
+    - button "view" [ref=e53]
+  - generic [ref=e55]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e56]
+  - generic [ref=e58]:
+    - text: Like test blog Author
+    - button "view" [ref=e59]
+  - generic [ref=e61]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e62]
+  - generic [ref=e64]:
+    - text: Like test blog Author
+    - button "view" [ref=e65]
+  - generic [ref=e67]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e68]
+  - generic [ref=e70]:
+    - text: Like test blog Author
+    - button "view" [ref=e71]
+  - generic [ref=e73]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e74]
+  - generic [ref=e76]:
+    - text: Like test blog Author
+    - button "view" [ref=e77]
+  - generic [ref=e79]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e80]
+  - generic [ref=e82]:
+    - text: Like test blog Author
+    - button "view" [ref=e83]
+  - generic [ref=e85]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e86]
+  - generic [ref=e88]:
+    - text: Like test blog Author
+    - button "view" [ref=e89]
+  - generic [ref=e91]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e92]
+  - generic [ref=e94]:
+    - text: Like test blog Author
+    - button "view" [ref=e95]
+  - generic [ref=e97]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e98]
+  - generic [ref=e100]:
+    - text: Like test blog Author
+    - button "view" [ref=e101]
+  - generic [ref=e103]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e104]
+  - generic [ref=e106]:
+    - text: Like test blog Author
+    - button "view" [ref=e107]
+  - generic [ref=e109]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e110]
+  - generic [ref=e112]:
+    - text: Like test blog Author
+    - button "view" [ref=e113]
+  - generic [ref=e115]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e116]
+  - generic [ref=e118]:
+    - text: Like test blog Author
+    - button "view" [ref=e119]
+  - generic [ref=e121]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e122]
+  - generic [ref=e124]:
+    - text: Like test blog Author
+    - button "view" [ref=e125]
+  - generic [ref=e127]:
+    - text: Like test blog Author
+    - button "view" [ref=e128]
+  - generic [ref=e130]:
+    - text: Delete test blog Author
+    - button "view" [ref=e131]
+  - generic [ref=e133]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e134]
+  - generic [ref=e136]:
+    - text: Like test blog Author
+    - button "view" [ref=e137]
+  - generic [ref=e139]:
+    - text: Like test blog Author
+    - button "view" [ref=e140]
+  - generic [ref=e142]:
+    - text: Delete test blog Author
+    - button "view" [ref=e143]
+  - generic [ref=e145]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e146]
+  - generic [ref=e148]:
+    - text: Like test blog Author
+    - button "view" [ref=e149]
+  - generic [ref=e151]:
+    - text: Delete test blog Author
+    - button "view" [ref=e152]
+  - generic [ref=e154]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e155]
+  - generic [ref=e157]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e158]
+  - generic [ref=e160]:
+    - text: Like test blog Author
+    - button "view" [ref=e161]
+  - generic [ref=e163]:
+    - text: Delete test blog Author
+    - button "view" [ref=e164]
+  - generic [ref=e166]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e167]
+  - generic [ref=e169]:
+    - text: Like test blog Author
+    - button "view" [ref=e170]
+  - generic [ref=e172]:
+    - text: Delete test blog Author
+    - button "view" [ref=e173]
+  - generic [ref=e175]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e176]
+  - generic [ref=e178]:
+    - text: Like test blog Author
+    - button "view" [ref=e179]
+  - generic [ref=e181]:
+    - text: Delete test blog Author
+    - button "view" [ref=e182]
+  - generic [ref=e184]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e185]
+  - generic [ref=e187]:
+    - text: Like test blog Author
+    - button "view" [ref=e188]
+  - generic [ref=e190]:
+    - text: Delete test blog Author
+    - button "view" [ref=e191]
+  - generic [ref=e193]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e194]
+  - generic [ref=e196]:
+    - text: Like test blog Author
+    - button "view" [ref=e197]
+  - generic [ref=e199]:
+    - text: Delete test blog Author
+    - button "view" [ref=e200]
+  - generic [ref=e202]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e203]
+  - generic [ref=e205]:
+    - text: Like test blog Author
+    - button "view" [ref=e206]
+  - generic [ref=e208]:
+    - text: Delete test blog Author
+    - button "view" [ref=e209]
+  - generic [ref=e211]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e212]
+  - generic [ref=e214]:
+    - text: Like test blog Author
+    - button "view" [ref=e215]
+  - generic [ref=e217]:
+    - text: Delete test blog Author
+    - button "view" [ref=e218]
+  - generic [ref=e220]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e221]
+  - generic [ref=e223]:
+    - text: Like test blog Author
+    - button "view" [ref=e224]
+  - generic [ref=e226]:
+    - text: Delete test blog Author
+    - button "view" [ref=e227]
+  - generic [ref=e229]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e230]
+  - generic [ref=e232]:
+    - text: Like test blog Author
+    - button "view" [ref=e233]
+  - generic [ref=e235]:
+    - text: Delete test blog Author
+    - button "view" [ref=e236]
+  - generic [ref=e238]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e239]
+  - generic [ref=e241]:
+    - text: Like test blog Author
+    - button "view" [ref=e242]
+  - generic [ref=e244]:
+    - text: Delete test blog Author
+    - button "view" [ref=e245]
+  - generic [ref=e247]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e248]
+  - generic [ref=e250]:
+    - text: Like test blog Author
+    - button "view" [ref=e251]
+  - generic [ref=e253]:
+    - text: Delete test blog Author
+    - button "view" [ref=e254]
+  - generic [ref=e256]:
+    - text: Playwright testing Test Author
+    - button "view" [ref=e257]
+```

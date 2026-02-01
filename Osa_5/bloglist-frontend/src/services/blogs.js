@@ -1,5 +1,8 @@
 import axios from 'axios'
-const baseUrl = '/api/blogs'
+
+console.log('BACKEND URL:', import.meta.env.VITE_BACKEND_URL)
+
+const baseUrl = `${import.meta.env.VITE_BACKEND_URL}/api/blogs`
 
 let token = null
 
