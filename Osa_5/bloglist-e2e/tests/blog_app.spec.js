@@ -19,8 +19,7 @@ describe('Blog app', () => {
         password: 'salainen'
       }
     })
-
-    // Tyhjennetään localStorage 
+ 
     await page.addInitScript(() => { 
       window.localStorage.clear() 
     })
